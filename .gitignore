@@ -1,0 +1,13 @@
+.DS_Store
+**/.DS_Store
+**/**/.DS_Store
+development/dataImportScripts/**/*.asv
+# ignoring matlab-specific, (usually) large files and images
+*.asv
+*.mat
+*.png
+*.jpg
+*.fig
+*.dat
+
+*.pptx
