@@ -2,7 +2,7 @@ function [ ] = plotPienet(flow)
 
 close all
 % list = dir('D:\Koulujuttuja\Kandi\Kandimittaukset\dataPienet\2016*.mat');
-list = dir('P:\Kandi\Kandimittaukset\dataPienet\2016*.mat');
+list = dir('S:\61102_Common\Users\HeikkilaJ\Github\Kandi\dataPienet\2016*.mat');
 
 
 
@@ -101,8 +101,10 @@ smpsDpMittaus = smpsDp - (aikaErotusMittaus*kasvuNopeus);
 
 
 sovitus = fit([psmTimeReference1; psmTimeReference2], [psmConcReference1; psmConcReference2] ,'poly5')
-fun = @(x,psmTimeGenerate)x(1)*exp(x(2)*(psmTimeGenerate));
-x0 = [psmConcReference1(1), -5];
+y = sovitus(psmTimeMittaus)
+haviot = 1 - psmConcMittaus./y;
+haviotSTD = std(haviot);
+haviot = mean(haviot);
 % sovitusLs = lsqcurvefit(fun,x0,psmTimeGenerate',psmConcReference1)
 
 
@@ -146,6 +148,27 @@ hold on
 plot(psmTimeReference2, psmConcReference2,'b')
 plot(psmTimeMittaus, psmConcMittaus,'g')
 h = plot(sovitus)
+txt = ['Häviöt ',num2str(haviot,2),'\pm',num2str(haviotSTD,2)]
+% text(psmTimeReference1(end),psmConcMittaus(1)+100,txt)
+if flow == 40
+    x = [0.625 0.625];
+    y = [0.18 0.3];
+    x2 = [0.5 0.625];
+    y2 = [0.3 0.23];
+elseif flow == 35
+    x = [0.48 0.48];
+    y = [0.38 0.55];
+    x2 = [0.4 0.48];
+    y2 = [0.4 0.47];
+elseif flow == 10
+    x = [0.59 0.59];
+    y = [0.36 0.53];
+    x2 = [0.53 0.59];
+    y2 = [0.4 0.47];    
+end
+
+annotation('line',x,y)
+annotation('textarrow',x2,y2,'String',txt);
 
 % plot(psmTimeGenerate, psmConcReference1,psmTimeGenerate',fun(sovitusLs,psmTimeGenerate'))
 datetick('x')
