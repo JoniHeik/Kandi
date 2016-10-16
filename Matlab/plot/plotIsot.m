@@ -13,7 +13,8 @@ close all
 
 %Listataan kaikki datat
 % list = dir('P:\Kandi\Kandimittaukset\dataIsot\2016*.mat');
-list = dir('S:\61102_Common\Users\HeikkilaJ\Github\Kandi\dataIsot\2016*.mat');
+% list = dir('S:\61102_Common\Users\HeikkilaJ\Github\Kandi\dataIsot\2016*.mat');
+list = dir('D:\koulujuttuja\Kandi\Kandimittaukset\dataIsot\2016*.mat');
 
 %KÄydään läpi kaikki listassa olevat tieodostot
 for fileIndex = 1:length(list)
@@ -216,7 +217,7 @@ end
 if length(elpiMittaus) > length(elpiReference);
     haviotElpi = elpiMittaus(1:length(elpiReference),:)./elpiReference;
 else
-   haviotElpi =  elpiMittaus./elpiReference(1:length(elpiMittaus),:);;
+   haviotElpi =  elpiMittaus./elpiReference(1:length(elpiMittaus),:);
 end
 
 haviotElpi = 1 - haviotElpi;

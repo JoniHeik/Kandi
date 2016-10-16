@@ -1,4 +1,4 @@
-function [haviotKok, haviotTransport, haviotSampling] = particleLossesCar(Q,kuvat, dp,Uo,inletinAsento)
+function [haviotKok, haviotTransport, haviotSampling, lapaisyTransport] = particleLossesCar(Q,kuvat, dp,Uo,inletinAsento)
 
 %Funktio laskee hiukkashäviöt annetuilla parametreillä. Otetaan huomioon
 %näytteenotontehokkuus ja kuljetustehokkuus. Tämä on  pääfunktio joka
