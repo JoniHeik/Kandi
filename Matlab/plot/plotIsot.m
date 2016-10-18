@@ -72,6 +72,7 @@ for fileIndex = 1:length(list)
             
             apsReference = aps;
             elpiReference = elpi;
+            elpiPlusStdReference = std(elpiPlus);
 
 
             
@@ -125,6 +126,8 @@ for fileIndex = 1:length(list)
             
             apsStdMittaus = std(aps);
             elpiStdMittaus = std(elpi);
+            elpiPlusStdMittaus = std(elpiPlus);
+            
             
             apsMittaus = aps;
             elpiMittaus = elpi;
@@ -222,11 +225,19 @@ end
 
 haviotElpi = 1 - haviotElpi;
 haviotElpiMean = median(haviotElpi);
-elpiStd = std(haviotElpi)
+for i = 1:length(haviotElpiMean)
+    if haviotElpiMean(i) < 0
+        haviotElpiMean(i) = 0;
+    end
+end
+
+%elpiStdHavio = std(haviotElpi)
 
 haviotElpiMedian = 1 - haviotElpiMedian;
 
-elpiStd = 1- elpiStdMittaus./elpiStdReference;
+elpPlusStd = mean(elpiPlusStdReference./elpiPlusStdMittaus);
+
+elpiStdHavio = (1- (elpiStdMittaus.*elpPlusStd)./elpiStdReference)*0.4;
 
 
 % %%
@@ -254,16 +265,16 @@ legend('Nollamittaus', 'Automittaus')
 % % ylabel('dndlogdp')
 % 
 % % 
-%Elpin data. mittausdata on normalisoitu
-% figure(7)
-% h  = errorbar(elpiDpMean(2:end)',elpiReferenceMedian(2:end),elpiStd(2:end))
-% hold on
-% set(h,'LineWidth',1.5)
-% set(gca,'xscale','log')
-% legend('Referenssi')
-% title('Elpi')
-% xlabel('dp (m)')
-% ylabel('dndlogdp')
+% Elpin data. mittausdata on normalisoitu
+figure(7)
+h  = errorbar(elpiDpMean(2:end)',elpiReferenceMedian(2:end),elpiStd(2:end))
+hold on
+set(h,'LineWidth',1.5)
+set(gca,'xscale','log')
+legend('Referenssi')
+title('Elpi')
+xlabel('dp (m)')
+ylabel('dndlogdp')
 
 figure(14)
 semilogx(hiukkaskoko,haviotTransport,'LineWidth',3)
@@ -280,7 +291,7 @@ figure(16)
 semilogx(hiukkaskoko,haviotTransport,'LineWidth',3)
 hold on
 semilogx(apsDp(1:end)*10^-6, haviotAPSMedian(1:end),'*k')
-errorbar(elpiDpMean(3:end-1),haviotElpiMean(3:end-1),elpiStd(3:end-1),'*m')
+errorbar(elpiDpMean(3:end-1),haviotElpiMean(3:end-1),elpiStdHavio(3:end-1),'*m')
 xlabel('dp(m)')
 % title('Häviöt mediaani')
 ylabel('Häviöt')
