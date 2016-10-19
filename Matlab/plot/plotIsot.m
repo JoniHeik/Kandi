@@ -237,7 +237,7 @@ haviotElpiMedian = 1 - haviotElpiMedian;
 
 elpPlusStd = mean(elpiPlusStdReference./elpiPlusStdMittaus);
 
-elpiStdHavio = (1- (elpiStdMittaus.*elpPlusStd)./elpiStdReference)*0.4;
+elpiStdHavio = (1- (elpiStdMittaus.*elpPlusStd)./elpiStdReference)*0.2;
 
 
 % %%
